@@ -32,15 +32,15 @@ jobs:
           - script: brew upgrade openssl@1.1
             displayName: Install OpenSSL with brew
 
-          - script: $PYTHON_BIN_PATH -m pip install -U virtualenv
+          - script: $PYTHON_BIN_PATH -m pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U virtualenv
             displayName: Install virtualenv
           - script: $PYTHON_BIN_PATH -m virtualenv .venv
             displayName: Create virtualenv
-          - script: .venv/bin/pip install -U wheel
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U wheel
             displayName: Update wheel to the latest version
-          - script: .venv/bin/pip install -U pip==10.0.1
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip==10.0.1
             displayName: Downgrade pip lol
-          - script: .venv/bin/pip install cffi six ipaddress "enum34; python_version < '3'"
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
             displayName: Install our Python dependencies
 
           - script: |
@@ -57,7 +57,7 @@ jobs:
                   CFLAGS="-I/usr/local/opt/openssl@1.1/include -mmacosx-version-min=10.9" \
                   .venv/bin/pip wheel cryptography==$BUILD_VERSION --wheel-dir=wheelhouse --no-binary cryptography --no-deps $PY_LIMITED_API
             displayName: Build the wheel
-          - script: .venv/bin/pip install --no-index -f wheelhouse cryptography
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' --no-index -f wheelhouse cryptography
             displayName: Test installing the wheel
           - script: |
               .venv/bin/python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
@@ -107,9 +107,9 @@ jobs:
       steps:
           - script: /opt/python/$PYTHON_VERSION/bin/python -m virtualenv .venv
             displayName: Create virtualenv
-          - script: .venv/bin/pip install -U pip==10.0.1
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip==10.0.1
             displayName: Downgrade pip lol
-          - script: .venv/bin/pip install cffi six ipaddress "enum34; python_version < '3'"
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
             displayName: Install our Python dependencies
           - script: |
               set -e
@@ -139,9 +139,9 @@ jobs:
                 exit 0
               fi
             displayName: Run execstack on the wheel
-          - script: .venv/bin/pip install -U pip
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip
             displayName: Upgrade pip again so we can actually use manylinux2010
-          - script: .venv/bin/pip install cryptography==$BUILD_VERSION --no-index -f wheelhouse/
+          - script: .venv/bin/pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography==$BUILD_VERSION --no-index -f wheelhouse/
             displayName: Test installing the wheel
           - script: |
               .venv/bin/python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"

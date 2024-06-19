@@ -6,9 +6,9 @@ Frequently asked questions
 
 If you are having issues installing ``cryptography`` the first troubleshooting
 step is to upgrade ``pip`` and then try to install again. For most users this will
-take the form of ``pip install -U pip``, but on Windows you should do
-``python -m pip install -U pip``. If you are still seeing errors after upgrading
-and trying ``pip install cryptography`` again, please see the :doc:`/installation`
+take the form of ``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip``, but on Windows you should do
+``python -m pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip``. If you are still seeing errors after upgrading
+and trying ``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography`` again, please see the :doc:`/installation`
 documentation.
 
 How does ``cryptography`` compare to NaCl (Networking and Cryptography Library)?
@@ -49,7 +49,7 @@ Compiling ``cryptography`` on macOS produces a ``fatal error: 'openssl/aes.h' fi
 This happens because macOS 10.11 no longer includes a copy of OpenSSL.
 ``cryptography`` now provides wheels which include a statically linked copy of
 OpenSSL. You're seeing this error because your copy of pip is too old to find
-our wheel files. Upgrade your copy of pip with ``pip install -U pip`` and then
+our wheel files. Upgrade your copy of pip with ``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip`` and then
 try install ``cryptography`` again.
 
 If you are using PyPy, we do not currently ship ``cryptography`` wheels for
@@ -73,14 +73,14 @@ The compiler you are using is too old and not supported by ``cryptography``.
 Please upgrade to a more recent version. If you are running OpenBSD 6.1 or
 earlier the default compiler is extremely old. Use ``pkg_add`` to install a
 newer ``gcc`` and then install ``cryptography`` using
-``CC=/path/to/newer/gcc pip install cryptography``.
+``CC=/path/to/newer/gcc pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography``.
 
 Installing ``cryptography`` fails with ``Invalid environment marker: python_version < '3'``
 -------------------------------------------------------------------------------------------
 
 Your ``pip`` and/or ``setuptools`` are outdated. Please upgrade to the latest
-versions with ``pip install -U pip setuptools`` (or on Windows
-``python -m pip install -U pip setuptools``).
+versions with ``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools`` (or on Windows
+``python -m pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools``).
 
 Importing cryptography causes a ``RuntimeError`` about OpenSSL 1.0.1
 --------------------------------------------------------------------
@@ -120,7 +120,7 @@ constructors in version 2.1 and in version 2.5 moved the ``idna`` dependency
 to a ``setuptools`` extra. If you see this exception you should upgrade your
 software so that it no longer depends on this deprecated feature. If that is
 not yet possible you  can also install ``cryptography`` with
-``pip install cryptography[idna]`` to automatically install the missing
+``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography[idna]`` to automatically install the missing
 dependency. This workaround will be available until the feature is fully
 removed.
 

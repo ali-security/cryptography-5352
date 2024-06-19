@@ -5,7 +5,7 @@ You can install ``cryptography`` with ``pip``:
 
 .. code-block:: console
 
-    $ pip install cryptography
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 Supported platforms
 -------------------
@@ -44,7 +44,7 @@ just run
 
 .. code-block:: console
 
-    $ pip install cryptography
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 If you prefer to compile it yourself you'll need to have OpenSSL installed.
 You can compile OpenSSL yourself as well or use `a binary distribution`_.
@@ -58,7 +58,7 @@ environment variables to include the proper locations. For example:
     C:\> \path\to\vcvarsall.bat x86_amd64
     C:\> set LIB=C:\OpenSSL-win64\lib;%LIB%
     C:\> set INCLUDE=C:\OpenSSL-win64\include;%INCLUDE%
-    C:\> pip install cryptography
+    C:\> pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 As of OpenSSL 1.1.0 the library names have changed from ``libeay32`` and
 ``ssleay32`` to ``libcrypto`` and ``libssl`` (matching their names on all other
@@ -81,7 +81,7 @@ all you should need to do is:
 
 .. code-block:: console
 
-    $ pip install cryptography
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 If you are on Alpine or just want to compile it yourself then
 ``cryptography`` requires a compiler, headers for Python (if you're not
@@ -126,7 +126,7 @@ use ``--no-binary``.
 
 .. code-block:: console
 
-    $ pip install cryptography --no-binary cryptography
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography --no-binary cryptography
 
 
 Using your own OpenSSL on Linux
@@ -200,8 +200,8 @@ dependencies.
 
     virtualenv env
     . env/bin/activate
-    pip install -U setuptools
-    pip install -U wheel pip
+    pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U setuptools
+    pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U wheel pip
     curl -O https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
     tar xvf openssl-${OPENSSL_VERSION}.tar.gz
     cd openssl-${OPENSSL_VERSION}
@@ -223,7 +223,7 @@ users with pip 8 or above you only need one step:
 
 .. code-block:: console
 
-    $ pip install cryptography
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 If you want to build cryptography yourself or are on an older macOS version,
 cryptography requires the presence of a C compiler, development headers, and
@@ -248,14 +248,14 @@ To build cryptography and dynamically link it:
 .. code-block:: console
 
     $ brew install openssl@1.1
-    $ env LDFLAGS="-L$(brew --prefix openssl@1.1)/lib" CFLAGS="-I$(brew --prefix openssl@1.1)/include" pip install cryptography
+    $ env LDFLAGS="-L$(brew --prefix openssl@1.1)/lib" CFLAGS="-I$(brew --prefix openssl@1.1)/include" pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 `MacPorts`_:
 
 .. code-block:: console
 
     $ sudo port install openssl
-    $ env LDFLAGS="-L/opt/local/lib" CFLAGS="-I/opt/local/include" pip install cryptography
+    $ env LDFLAGS="-L/opt/local/lib" CFLAGS="-I/opt/local/include" pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 You can also build cryptography statically:
 
@@ -264,14 +264,14 @@ You can also build cryptography statically:
 .. code-block:: console
 
     $ brew install openssl@1.1
-    $ env CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 LDFLAGS="$(brew --prefix openssl@1.1)/lib/libssl.a $(brew --prefix openssl@1.1)/lib/libcrypto.a" CFLAGS="-I$(brew --prefix openssl@1.1)/include" pip install cryptography
+    $ env CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 LDFLAGS="$(brew --prefix openssl@1.1)/lib/libssl.a $(brew --prefix openssl@1.1)/lib/libcrypto.a" CFLAGS="-I$(brew --prefix openssl@1.1)/include" pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 `MacPorts`_:
 
 .. code-block:: console
 
     $ sudo port install openssl
-    $ env CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 LDFLAGS="/opt/local/lib/libssl.a /opt/local/lib/libcrypto.a" CFLAGS="-I/opt/local/include" pip install cryptography
+    $ env CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 LDFLAGS="/opt/local/lib/libssl.a /opt/local/lib/libcrypto.a" CFLAGS="-I/opt/local/include" pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography
 
 If you need to rebuild ``cryptography`` for any reason be sure to clear the
 local `wheel cache`_.

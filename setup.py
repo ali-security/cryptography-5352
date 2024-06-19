@@ -262,7 +262,7 @@ setup(
         ],
         # This extra is for the U-label support that was deprecated in
         # cryptography 2.1. If you need this deprecated path install with
-        # pip install cryptography[idna]
+        # pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cryptography[idna]
         "idna": [
             "idna >= 2.1",
         ]

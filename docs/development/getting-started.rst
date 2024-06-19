@@ -16,10 +16,10 @@ mode. For example:
 
     $ # Create a virtualenv and activate it
     $ # Set up your cryptography build environment
-    $ pip install --requirement dev-requirements.txt
-    $ pip install --editable .
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' --requirement dev-requirements.txt
+    $ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' --editable .
 
-Make sure that ``pip install --requirement ...`` has installed the Python
+Make sure that ``pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' --requirement ...`` has installed the Python
 package ``vectors/`` and packages on ``tests/`` . If it didn't, you may
 install them manually by using ``pip`` on each directory.
 
@@ -47,7 +47,7 @@ For example, with `Homebrew`_:
 
     $ env LDFLAGS="-L$(brew --prefix openssl@1.1)/lib" \
         CFLAGS="-I$(brew --prefix openssl@1.1)/include" \
-        pip install --requirement ./dev-requirements.txt
+        pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' --requirement ./dev-requirements.txt
 
 Alternatively for a static build you can specify
 ``CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1`` and ensure ``LDFLAGS`` points to the
