@@ -66,4 +66,4 @@ pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi
 python -m virtualenv ~/.venv
 source ~/.venv/bin/activate
 # If we pin coverage it must be kept in sync with tox.ini and azure-pipelines.yml
-pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' tox codecov coverage
+pip install tox codecov coverage
