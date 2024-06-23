@@ -42,6 +42,6 @@ else
         exit 1
     fi
     $downstream_script install
-    pip install .
+    pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' .
     $downstream_script run
 fi

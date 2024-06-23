@@ -5,7 +5,7 @@ case "${1}" in
         git clone --depth=1 https://github.com/certbot/josepy
         cd josepy
         git rev-parse HEAD
-        pip install -e ".[tests]"
+        pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -e ".[tests]"
         ;;
     run)
         cd josepy
