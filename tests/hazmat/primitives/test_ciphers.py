@@ -288,6 +288,14 @@ class TestCipherUpdateInto(object):
         assert res == len(pt)
         assert bytes(buf)[:res] == ct
 
+    def test_update_into_immutable(self, backend):
+        key = b"\x00" * 16
+        c = ciphers.Cipher(AES(key), modes.ECB(), backend)
+        encryptor = c.encryptor()
+        buf = b"\x00" * 32
+        with pytest.raises((TypeError, BufferError)):
+            encryptor.update_into(b"testing", buf)
+
     def test_update_into_buffer_too_small(self, backend):
         key = b"\x00" * 16
         c = ciphers.Cipher(AES(key), modes.ECB(), backend)

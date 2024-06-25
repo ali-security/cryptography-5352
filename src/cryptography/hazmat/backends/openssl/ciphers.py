@@ -132,7 +132,7 @@ class _CipherContext(object):
             )
 
         buf = self._backend._ffi.cast(
-            "unsigned char *", self._backend._ffi.from_buffer(buf)
+            "unsigned char *", self._backend._ffi.from_buffer(buf, require_writable=True)
         )
         outlen = self._backend._ffi.new("int *")
         res = self._backend._lib.EVP_CipherUpdate(
