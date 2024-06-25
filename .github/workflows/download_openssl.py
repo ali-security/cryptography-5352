@@ -6,14 +6,11 @@ import zipfile
 import requests
 
 
-RUNS_URL = (
-    "https://api.github.com/repos/pyca/infra/actions/workflows/"
-    "build-openssl.yml/runs?branch=master&status=success"
-)
+RUNS_URL = "https://www.openssl.org/source/old/1.1.1/openssl-{version}"
 
 
-def get_response(url, token):
-    response = requests.get(url, headers={"Authorization": "token " + token})
+def get_response(url):
+    response = requests.get(url)
     if response.status_code != 200:
         raise ValueError("Got HTTP {} fetching {}: ".format(
             response.code, url, response.content
@@ -21,23 +18,10 @@ def get_response(url, token):
     return response
 
 
-def main(target):
-    token = os.environ["GITHUB_TOKEN"]
-    print("Looking for: {}".format(target))
-
-    response = get_response(RUNS_URL, token).json()
-    artifacts_url = response["workflow_runs"][0]["artifacts_url"]
-    response = get_response(artifacts_url, token).json()
-    for artifact in response["artifacts"]:
-        if artifact["name"] == target:
-            print("Found artifact")
-            response = get_response(
-                artifact["archive_download_url"], token
-            )
-            zipfile.ZipFile(io.BytesIO(response.content)).extractall(
-                "C:/{}".format(artifact["name"])
-            )
-            return
+def main(version):
+    print("Looking for: {}".format(version))
+    response = get_response(RUNS_URL.format(version=version)).json()
+    zipfile.ZipFile(io.BytesIO(response.content)).extractall("C:/{}".format("OpenSSL"))
 
 
 if __name__ == "__main__":
