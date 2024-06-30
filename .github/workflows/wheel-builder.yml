@@ -43,9 +43,7 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
-            dir
-            dir .github/workflows
-            dir .github/workflows/openssl_zips
+            dir .github/workflows/openssl_zips/_build
             set LIB=D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\_build\include
             set INCLUDE=D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\_build
             pip wheel . --wheel-dir=wheelhouse
