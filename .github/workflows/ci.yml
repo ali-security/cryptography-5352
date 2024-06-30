@@ -63,6 +63,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Setup python
+        env:
+          PIP_TRUSTED_HOST: https://pypi.python.org
         uses: MatteoH2O1999/setup-python@v1
         with:
           python-version: ${{ matrix.PYTHON.VERSION }}
