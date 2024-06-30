@@ -34,9 +34,9 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' requests
       - name: Download OpenSSL
         run: |
-            python .github/workflows/download_openssl.py openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}
-            echo "::set-env name=INCLUDE::C:/openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}/include;%INCLUDE%"
-            echo "::set-env name=LIB::C:/openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}/lib;%LIB%"
+            python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }}
+            echo "::set-env name=INCLUDE::C:/_build/include;%INCLUDE%"
+            echo "::set-env name=LIB::C:/_build;%LIB%"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
