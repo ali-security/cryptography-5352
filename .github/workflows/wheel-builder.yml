@@ -35,9 +35,10 @@ jobs:
             Remove-Item VCForPython27.msi -Force
         shell: powershell
         if: matrix.PYTHON.VERSION == '2.7'
-      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' requests
+      - run: echo %cd%
       - name: Download OpenSSL
         run: |
+            dir
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }}
             echo "::set-env name=INCLUDE::C:/_build/include;%INCLUDE%"
             echo "::set-env name=LIB::C:/_build;%LIB%"
