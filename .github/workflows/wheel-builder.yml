@@ -1,6 +1,8 @@
 on:
   repository_dispatch:
     types: [wheel-builder]
+  workflow_dispatch:
+
 
 jobs:
   windows:
