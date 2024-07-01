@@ -60,8 +60,8 @@ if [ -z "${DOWNSTREAM}" ]; then
     git clone --depth=1 https://github.com/google/wycheproof "$HOME/wycheproof"
 fi
 
-pip install -U pip
-pip install virtualenv
+pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip
+pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' virtualenv
 
 python -m virtualenv ~/.venv
 source ~/.venv/bin/activate

@@ -5,8 +5,8 @@ case "${1}" in
         git clone --depth 1 https://github.com/shazow/urllib3
         cd urllib3
         git rev-parse HEAD
-        pip install -r ./dev-requirements.txt
-        pip install -e ".[socks]"
+        pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -r ./dev-requirements.txt
+        pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -e ".[socks]"
         ;;
     run)
         cd urllib3

@@ -5,7 +5,7 @@ case "${1}" in
         git clone --depth=1 https://github.com/twisted/twisted
         cd twisted
         git rev-parse HEAD
-        pip install ".[tls,conch,http2]"
+        pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' ".[tls,conch,http2]"
         ;;
     run)
         cd twisted
