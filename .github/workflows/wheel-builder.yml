@@ -41,12 +41,11 @@ jobs:
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }}
 
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
-      - run: echo %PATH%
       - name: Create Wheels
-        run: set INCLUDE=D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\include;%INCLUDE% && set LIB=D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib;%LIB% && pip wheel . --wheel-dir=wheelhouse
-#        env:
-#          INCLUDE: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\include
-#          LIB: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib
+        run: pip wheel . --wheel-dir=wheelhouse
+        env:
+          INCLUDE: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\include
+          LIB: "D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib\libssl.lib D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib\libcrypto.lib"
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -f wheelhouse --no-index cryptography
       - name: Print the OpenSSL we built and linked against
         run: |
