@@ -49,7 +49,6 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -f wheelhouse --no-index cryptography
       - name: Print the OpenSSL we built and linked against
         run: |
-            DIR C:\hostedtoolcache\windows\Python\3.5.4\x64\lib\site-packages\cryptography\hazmat\bindings
             python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
 
       - run: mkdir cryptography-wheelhouse
