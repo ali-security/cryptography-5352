@@ -45,7 +45,7 @@ jobs:
         run: pip wheel . --wheel-dir=wheelhouse
         env:
           INCLUDE: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\include
-          LIB: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib\libssl.lib D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib\libcrypto.lib
+          LIB: D:\a\cryptography-5352\cryptography-5352\.github\workflows\openssl_zips\OpenSSL\lib
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -f wheelhouse --no-index cryptography
       - name: Print the OpenSSL we built and linked against
         run: |
