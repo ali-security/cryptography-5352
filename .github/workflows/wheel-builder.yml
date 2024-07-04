@@ -54,17 +54,14 @@ jobs:
       - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64"
       - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64\libs"
       - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64\PCbuild\amd64"
-      - run: pip install -U pip
+      - run: pip install pip==10.0.1
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
-        run: pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+        run: $env:PATH = "C:\OpenSSL\bin;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
-      - run: $env:PATH = "C:\OpenSSL\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
-        env:
-          INCLUDE: C:\OpenSSL\include
-          LIB: C:\OpenSSL\lib
+      - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
