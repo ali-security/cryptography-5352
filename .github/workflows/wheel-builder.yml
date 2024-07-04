@@ -57,7 +57,10 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
-      - run: dumpbin /dependents C:\hostedtoolcache\windows\Python\3.8.10\x86\lib\site-packages\cryptography\hazmat\bindings\_openssl.pyd
+      - uses: actions/upload-artifact@v1
+        with:
+          name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
+          path: cryptography-wheelhouse\
       - name: Print the OpenSSL we built and linked against
         run: |
             $env:PATH = "C:\OpenSSL\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
@@ -66,7 +69,3 @@ jobs:
           LIB: C:\OpenSSL\lib
       - run: mkdir cryptography-wheelhouse
       - run: move wheelhouse\cryptography*.whl cryptography-wheelhouse\
-      - uses: actions/upload-artifact@v1
-        with:
-          name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
-          path: cryptography-wheelhouse\
