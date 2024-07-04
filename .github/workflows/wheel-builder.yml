@@ -66,6 +66,7 @@ jobs:
             where api-ms-win-crt-string-l1-1-0.dll
             where python3.dll
             where libssl-1_1.dll
+        shell: cmd
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
