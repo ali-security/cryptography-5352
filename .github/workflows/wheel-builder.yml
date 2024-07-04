@@ -60,7 +60,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
-          path: cryptography-wheelhouse\
+          path: wheelhouse\
       - name: Print the OpenSSL we built and linked against
         run: |
             $env:PATH = "C:\OpenSSL\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
