@@ -52,7 +52,7 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
-      - run: set PATH=C:\OpenSSL\bin;%PATH% && pip install -f wheelhouse --no-index cryptography
+      - run: $env:PATH = C:\OpenSSL\bin = $env:PATH && pip install -f wheelhouse --no-index cryptography
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
