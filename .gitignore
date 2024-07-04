@@ -14,5 +14,4 @@ htmlcov/
 .hypothesis/
 .venv/
 .idea/
-.travis/
 wheelhouse
