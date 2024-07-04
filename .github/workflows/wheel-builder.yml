@@ -60,7 +60,7 @@ jobs:
             where ADVAPI32.dll
             where api-ms-win-crt-heap-l1-1-0.dll
             where api-ms-win-crt-runtime-l1-1-0.dll
-            $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && where libcrypto-1_1.dll
+            set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH% && where libcrypto-1_1.dll
             where KERNEL32.dll
             where VCRUNTIME140.dll
             where api-ms-win-crt-string-l1-1-0.dll
