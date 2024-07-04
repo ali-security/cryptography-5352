@@ -12,4 +12,7 @@ htmlcov/
 .eggs/
 *.py[cdo]
 .hypothesis/
-.venv
+.venv/
+.idea/
+.travis/
+wheelhouse
