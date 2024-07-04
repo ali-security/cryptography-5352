@@ -27,6 +27,7 @@ jobs:
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
       - uses: actions/checkout@master
+      - run: DIR "C:\Windows\System32"
       - name: Setup python
         uses: MatteoH2O1999/setup-python@v1
         with:
