@@ -28,6 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: DIR "C:\Windows\System32"
+      - run: DIR "C:\Windows\System32\downlevel"
       - name: Setup python
         uses: MatteoH2O1999/setup-python@v1
         with:
