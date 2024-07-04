@@ -20,10 +20,10 @@ jobs:
           - {ARCH: 'x64', WINDOWS: 'win64'}
         PYTHON:
 #          - {VERSION: "2.7", TOXENV: "py27", MSVC_VERSION: "2010"}
-          - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
+#          - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
 #          - {VERSION: "3.6", TOXENV: "py36", MSVC_VERSION: "2019"}
 #          - {VERSION: "3.7", TOXENV: "py37", MSVC_VERSION: "2019"}
-#          - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2019"}
+          - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2019"}
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
       - uses: actions/checkout@master
