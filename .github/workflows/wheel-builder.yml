@@ -27,8 +27,6 @@ jobs:
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
       - uses: actions/checkout@master
-      - run: DIR "C:\Windows\System32"
-      - run: DIR "C:\Windows\System32\downlevel"
       - name: Setup python
         uses: MatteoH2O1999/setup-python@v1
         with:
@@ -50,7 +48,7 @@ jobs:
       - run: C:\hostedtoolcache\windows\Python\3.8.10\x64\python.exe -m pip install pip==10.0.1
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
-        run: $env:PATH = "C:\OpenSSL\bin;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+        run: $env:PATH = "C:\OpenSSL\bin;C:\Windows\System32;C:\Windows\System32\downlevel;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
