@@ -52,12 +52,16 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
-      - run: pip install -f wheelhouse --no-index cryptography
-      - run: DIR C:\hostedtoolcache\windows\Python\3.5.4\x64\lib\site-packages\cryptography\hazmat\bindings
+      - run: set PATH=C:\OpenSSL\bin;%PATH% && pip install -f wheelhouse --no-index cryptography
+        env:
+          INCLUDE: C:\OpenSSL\include
+          LIB: C:\OpenSSL\lib
       - name: Print the OpenSSL we built and linked against
         run: |
-            python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
-
+            set PATH=C:\OpenSSL\bin;%PATH% && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
+        env:
+          INCLUDE: C:\OpenSSL\include
+          LIB: C:\OpenSSL\lib
       - run: mkdir cryptography-wheelhouse
       - run: move wheelhouse\cryptography*.whl cryptography-wheelhouse\
       - uses: actions/upload-artifact@v1
