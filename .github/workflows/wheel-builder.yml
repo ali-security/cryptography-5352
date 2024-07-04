@@ -56,6 +56,16 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
+      - run: |
+            where ADVAPI32.dll
+            where api-ms-win-crt-heap-l1-1-0.dll
+            where api-ms-win-crt-runtime-l1-1-0.dll
+            where libcrypto-1_1.dll
+            where KERNEL32.dll
+            where VCRUNTIME140.dll
+            where api-ms-win-crt-string-l1-1-0.dll
+            where python3.dll
+            where libssl-1_1.dll
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
