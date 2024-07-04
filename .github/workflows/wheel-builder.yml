@@ -45,7 +45,15 @@ jobs:
       - name: Download OpenSSL
         run: |
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }}
-
+      - run: DIR "C:\OpenSSL\include"
+      - run: DIR "C:\Program Files (x86)\Windows Kits\10\\lib\10.0.22621.0\\um\x64"
+      - run: DIR "C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\ucrt\x64"
+      - run: DIR "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64"
+      - run: DIR "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.40.33807\lib\x64"
+      - run: DIR "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.40.33807\ATLMFC\lib\x64"
+      - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64\PCbuild\amd64"
+      - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64"
+      - run: DIR "c:\hostedtoolcache\windows\python\3.8.10\x64\libs"
       - run: pip install -U pip
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
