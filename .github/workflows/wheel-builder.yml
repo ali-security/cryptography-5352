@@ -42,7 +42,7 @@ jobs:
 
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
-        run: pip wheel cryptography==2.9.2+sp1 --wheel-dir=wheelhouse --no-binary cryptography
+        run: pip wheel . --wheel-dir=wheelhouse --no-binary cryptography
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
