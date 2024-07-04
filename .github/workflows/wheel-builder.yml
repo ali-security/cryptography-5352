@@ -48,11 +48,11 @@ jobs:
       - run: C:\hostedtoolcache\windows\Python\3.8.10\x64\python.exe -m pip install pip -U
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
-        run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + "C:\Windows\System32;" + "C:\Windows\System32\downlevel;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+        run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
-      - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + "C:\Windows\System32;" + "C:\Windows\System32\downlevel;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
+      - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
@@ -60,7 +60,7 @@ jobs:
             where ADVAPI32.dll
             where api-ms-win-crt-heap-l1-1-0.dll
             where api-ms-win-crt-runtime-l1-1-0.dll
-            where libcrypto-1_1.dll
+            $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && where libcrypto-1_1.dll
             where KERNEL32.dll
             where VCRUNTIME140.dll
             where api-ms-win-crt-string-l1-1-0.dll
