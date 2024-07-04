@@ -58,7 +58,7 @@ jobs:
           LIB: C:\OpenSSL\lib
       - name: Print the OpenSSL we built and linked against
         run: |
-            set PATH=C:\OpenSSL\bin;%PATH% && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
+            $env:PATH = C:\OpenSSL\bin = $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
         env:
           INCLUDE: C:\OpenSSL\include
           LIB: C:\OpenSSL\lib
