@@ -23,7 +23,7 @@ jobs:
 #          - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
 #          - {VERSION: "3.6", TOXENV: "py36", MSVC_VERSION: "2019"}
 #          - {VERSION: "3.7", TOXENV: "py37", MSVC_VERSION: "2019"}
-          - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2019"}
+          - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2017"}
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
       - uses: actions/checkout@master
@@ -47,8 +47,6 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
-          type C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libssl.lib
-          type C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libcrypto.lib
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }};%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
