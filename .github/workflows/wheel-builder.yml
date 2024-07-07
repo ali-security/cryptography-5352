@@ -47,6 +47,8 @@ jobs:
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
       - run: C:\hostedtoolcache\windows\Python\3.8.10\x64\python.exe -m pip install pip -U
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
+      - run: where rustc
+        shell: cmd
       - name: Create Wheels
         run: |
           vcvarsall.bat x86_amd64
@@ -65,8 +67,6 @@ jobs:
       - run: |
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
-      - run: where rustc
-        shell: cmd
       - name: Print the OpenSSL we built and linked against
         run: |
             $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
