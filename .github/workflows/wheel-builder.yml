@@ -56,14 +56,16 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
+        shell: cmd
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
           path: wheelhouse\
-      - name: Print the OpenSSL we built and linked against
-        run: |
+      - run: |
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
+      - name: Print the OpenSSL we built and linked against
+        run: |
             $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
