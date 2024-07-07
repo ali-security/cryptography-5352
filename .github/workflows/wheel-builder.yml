@@ -51,13 +51,13 @@ jobs:
           set INCLUDE=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include;%INCLUDE%
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
-          pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+          python setup.py bdist_wheel
         shell: cmd
-      - run: pip install -f wheelhouse --no-index cryptography
+      - run: pip install -f dist --no-index cryptography
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
-          path: wheelhouse\
+          path: dist\
       - run: |
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
             cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64\DLLs
