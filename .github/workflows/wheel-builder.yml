@@ -52,11 +52,7 @@ jobs:
           set PATH=C:\OpenSSL-\bin;%PATH%
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         shell: cmd
-      - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
-        shell: powershell
-        env:
-          INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
-          LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
+      - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
