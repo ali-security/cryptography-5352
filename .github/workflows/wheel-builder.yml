@@ -55,6 +55,7 @@ jobs:
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           OPENSSL_NO_ENGINE: 1
+          CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS: 1
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
