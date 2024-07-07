@@ -49,7 +49,6 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
-          vcvarsall.bat x86_amd64
           $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
