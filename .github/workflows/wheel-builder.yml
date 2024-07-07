@@ -52,6 +52,7 @@ jobs:
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
         env:
+          OPENSSL_NO_ENGINE: 1
           CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS: 1
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
