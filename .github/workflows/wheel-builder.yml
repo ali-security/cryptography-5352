@@ -47,13 +47,15 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libcrypto.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libcrypto.dll
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libssl.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libssl.dll
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
         env:
           OPENSSL_NO_ENGINE: 1
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
-          #INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
+          INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
