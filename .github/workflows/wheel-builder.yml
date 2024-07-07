@@ -44,7 +44,8 @@ jobs:
         run: |
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools
-      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
+      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' six ipaddress "enum34; python_version < '3'"
+      - run: pip install cffi
       - name: Create Wheels
         run: |
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }};%PATH%
