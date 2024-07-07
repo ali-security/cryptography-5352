@@ -62,8 +62,8 @@ jobs:
           path: wheelhouse\
       - name: Print the OpenSSL we built and linked against
         run: |
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64\DLLs
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64\DLLs
+            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
+            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
             $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
