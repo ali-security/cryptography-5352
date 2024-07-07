@@ -56,7 +56,6 @@ jobs:
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
-        shell: cmd
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
