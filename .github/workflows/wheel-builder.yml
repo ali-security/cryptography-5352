@@ -45,7 +45,6 @@ jobs:
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
-      - run: python -c "import sys; print(sys.platform)"
       - name: Create Wheels
         run: |
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
@@ -54,7 +53,7 @@ jobs:
         env:
           OPENSSL_NO_ENGINE: 1
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
-          INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
+          #INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
