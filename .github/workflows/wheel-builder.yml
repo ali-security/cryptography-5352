@@ -47,8 +47,8 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
-          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libcrypto.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libcrypto.dll
-          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libssl.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libssl.dll
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libcrypto-1_1.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libcrypto.dll
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\libssl-1_1.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include\_libssl.dll
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
