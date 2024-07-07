@@ -52,18 +52,13 @@ jobs:
           set INCLUDE=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include;%INCLUDE%
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
-          pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+          pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary cryptography
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
           path: wheelhouse\
-      - run: |
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64\DLLs
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64
-            cp C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl-1_1.dll C:\hostedtoolcache\windows\Python\3.8.10\x64\DLLs
       - name: Print the OpenSSL we built and linked against
         run: |
             $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
