@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         WINDOWS:
-          - {ARCH: 'x86', WINDOWS: 'win32'}
-          - {ARCH: 'x64', WINDOWS: 'win64'}
+          - { ARCH: 'x86', WINDOWS: 'win32', RUST_TRIPLE: 'i686-pc-windows-msvc' }
+          - { ARCH: 'x64', WINDOWS: 'win64', RUST_TRIPLE: 'x86_64-pc-windows-msvc' }
         PYTHON:
 #          - {VERSION: "2.7", TOXENV: "py27", MSVC_VERSION: "2010"}
           - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
@@ -53,6 +53,8 @@ jobs:
           $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH
           $env:LIB = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib;" + $env:LIB
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
+        env:
+          OPENSSL_STATIC: 1
       - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
         env:
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
