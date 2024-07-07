@@ -53,6 +53,8 @@ jobs:
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary cryptography
+        env:
+          OPENSSL_NO_ENGINE: 1
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
       - uses: actions/upload-artifact@v1
