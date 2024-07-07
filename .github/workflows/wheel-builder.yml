@@ -53,8 +53,6 @@ jobs:
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS: 1
-          LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
-          INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
         shell: cmd
       - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
         shell: powershell
