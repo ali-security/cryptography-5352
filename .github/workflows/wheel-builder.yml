@@ -51,8 +51,6 @@ jobs:
           set INCLUDE=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include;%INCLUDE%
           set PATH=C:\OpenSSL-\bin;%PATH%
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
-        env:
-          CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS: 1
         shell: cmd
       - run: $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && pip install -f wheelhouse --no-index cryptography
         shell: powershell
