@@ -44,7 +44,7 @@ jobs:
         run: |
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
-      - run: python -c "from distutils.ccompiler import new_compiler; from distutils.dist import Distribution; dist = Distribution(); dist.parse_config_files(); cmd = dist.get_command_obj('build'); cmd.ensure_finalized(); print(new_compiler(compiler=cmd.compiler).compiler_type)
+      - run: python -c "from distutils.ccompiler import new_compiler; from distutils.dist import Distribution; dist = Distribution(); dist.parse_config_files(); cmd = dist.get_command_obj('build'); cmd.ensure_finalized(); print(new_compiler(compiler=cmd.compiler).compiler_type)"
       - name: Create Wheels
         run: |
           $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH&& pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
