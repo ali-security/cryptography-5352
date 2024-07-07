@@ -47,8 +47,8 @@ jobs:
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' cffi six ipaddress "enum34; python_version < '3'"
       - name: Create Wheels
         run: |
-          IF EXISTS C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libssl.lib ECHO libssl.lib exists
-          IF EXISTS C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libcrypto.lib ECHO libcrypto.lib exists
+          type C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libssl.lib
+          type C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib\libcrypto.lib
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           pip wheel cryptography==2.9.2 --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
