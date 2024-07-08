@@ -50,7 +50,7 @@ jobs:
         run: |
           set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }};%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
-          pip wheel . --wheel-dir=wheelhouse --verbose --no-binary :all: cryptography
+          pip wheel . --no-index --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
