@@ -45,7 +45,6 @@ jobs:
       - name: Download OpenSSL
         run: |
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
-#      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' six ipaddress "enum34; python_version < '3'"
       - run: pip install cffi
       - name: Create Wheels
@@ -59,10 +58,7 @@ jobs:
       - run: pip install -f wheelhouse --no-index cryptography
       - name: Print the OpenSSL we built and linked against
         run: |
-            $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
-        env:
-          INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
-          LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
+            python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
       - run: mkdir cryptography-wheelhouse
       - run: move wheelhouse\cryptography*.whl cryptography-wheelhouse\
       - uses: actions/upload-artifact@v1
