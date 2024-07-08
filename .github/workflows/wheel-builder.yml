@@ -49,7 +49,9 @@ jobs:
       - run: pip install cffi
       - name: Create Wheels
         run: |
-          set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }};%PATH%
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\_libcrypto.dll
+          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\_libssl.dll
+          set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
           set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
           set LIB=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib;%LIB%
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
