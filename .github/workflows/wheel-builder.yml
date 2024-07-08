@@ -20,9 +20,9 @@ jobs:
           - { ARCH: 'x64', WINDOWS: 'win64'}
         PYTHON:
 #          - {VERSION: "2.7", TOXENV: "py27", MSVC_VERSION: "2010"}
-#          - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
-#          - {VERSION: "3.6", TOXENV: "py36", MSVC_VERSION: "2019"}
-#          - {VERSION: "3.7", TOXENV: "py37", MSVC_VERSION: "2019"}
+          - {VERSION: "3.5", TOXENV: "py35", MSVC_VERSION: "2019"}
+          - {VERSION: "3.6", TOXENV: "py36", MSVC_VERSION: "2019"}
+          - {VERSION: "3.7", TOXENV: "py37", MSVC_VERSION: "2019"}
           - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2019"}
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
@@ -43,28 +43,18 @@ jobs:
       - name: Download OpenSSL
         run: |
             python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} ${{ matrix.WINDOWS.WINDOWS }}
-      - run: pip uninstall setuptools -y
-      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools
+#      - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' -U pip setuptools
       - run: pip install --index-url 'https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/' six ipaddress "enum34; python_version < '3'"
       - run: pip install cffi
       - name: Create Wheels
         run: |
-          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libcrypto.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\_libcrypto.dll
-          mv C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\libssl.dll C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin\_libssl.dll
-          set PATH=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;%PATH%
-          set OPENSSL_DIR=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}
-          set LIB=C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib;%LIB%
           pip wheel . --wheel-dir=wheelhouse --verbose --no-binary cryptography
         env:
-#          LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
+          LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
           INCLUDE: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\include
           PIP_INDEX_URL: https://:2020-04-22T23:19:51.290101Z@time-machines-pypi.sealsecurity.io/
         shell: cmd
       - run: pip install -f wheelhouse --no-index cryptography
-      - uses: actions/upload-artifact@v1
-        with:
-          name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
-          path: wheelhouse\
       - name: Print the OpenSSL we built and linked against
         run: |
             $env:PATH = "C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\bin;" + $env:PATH && python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
@@ -73,3 +63,7 @@ jobs:
           LIB: C:\OpenSSL-${{ matrix.WINDOWS.WINDOWS }}\lib
       - run: mkdir cryptography-wheelhouse
       - run: move wheelhouse\cryptography*.whl cryptography-wheelhouse\
+      - uses: actions/upload-artifact@v1
+        with:
+          name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
+          path: cryptography-wheelhouse\
