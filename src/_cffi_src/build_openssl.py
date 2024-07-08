@@ -65,7 +65,7 @@ def _extra_compile_args(platform):
                       platform.startswith("aix")):
         return ["-Wconversion", "-Wno-error=sign-conversion"]
     else:
-        return []
+        return ["/MT"]
 
 
 ffi = build_ffi_for_binding(

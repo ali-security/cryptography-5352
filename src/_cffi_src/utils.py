@@ -83,7 +83,7 @@ def extra_link_args(compiler_type):
     if compiler_type == 'msvc':
         # Enable NX and ASLR for Windows builds on MSVC. These are enabled by
         # default on Python 3.3+ but not on 2.x.
-        return ['/NXCOMPAT', '/DYNAMICBASE', '/LD']
+        return ['/NXCOMPAT', '/DYNAMICBASE']
     else:
         return []
 
