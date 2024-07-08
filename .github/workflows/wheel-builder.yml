@@ -26,7 +26,7 @@ jobs:
           - {VERSION: "3.8", TOXENV: "py38", MSVC_VERSION: "2019"}
     name: "Python ${{ matrix.PYTHON.VERSION }} on ${{ matrix.WINDOWS.WINDOWS }}"
     steps:
-      - run: DIR "C:\Program Files (x86)\Microsoft Visual Studio\"
+      - run: DIR "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
         shell: cmd
       - uses: actions/checkout@master
       - name: Setup python
