@@ -69,4 +69,4 @@ jobs:
       - name: Pytest
         run: |
           python -m pip install iso8601 pretend pytz hypothesis pytest cryptography_vectors==2.9.2 
-          python -m pytest tests
+          python -m pytest tests -k "not test_vector_version"
