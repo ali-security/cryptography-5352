@@ -68,6 +68,5 @@ jobs:
       - run: dir cryptography-wheelhouse
       - name: Pytest
         run: |
-          ren cryptography-wheelhouse\cryptography*.whl cryptography-wheelhouse\cryptography.whl
-          python -m pip install pytest pretend pytz hypothesis cryptography_vectors==2.9.2 cryptography-wheelhouse\cryptography.whl
+          python -m pip install pytest pretend pytz hypothesis cryptography_vectors==2.9.2
           python -m pytest tests
