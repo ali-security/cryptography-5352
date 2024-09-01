@@ -68,6 +68,6 @@ jobs:
       - run: dir cryptography-wheelhouse
       - name: Pytest
         run: |
-          copy /Y cryptography-wheelhouse\cryptography*.whl cryptography-wheelhouse\cryptography.whl
+          ren cryptography-wheelhouse\cryptography*.whl cryptography-wheelhouse\cryptography.whl
           python -m pip install pytest pretend pytz hypothesis cryptography_vectors==2.9.2 cryptography-wheelhouse\cryptography.whl
           python -m pytest tests
