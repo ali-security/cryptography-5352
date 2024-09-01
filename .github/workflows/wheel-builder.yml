@@ -65,3 +65,7 @@ jobs:
         with:
           name: "cryptography-${{ github.event.client_payload.BUILD_VERSION }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}"
           path: cryptography-wheelhouse\
+      - name: Pytest
+        run: |
+          pip install pytest pretend pytz hypothesis pytest cryptography_vectors==2.9.2 cryptography-wheelhouse\cryptography*.whl
+          python -m pytest tests
