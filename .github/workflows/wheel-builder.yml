@@ -68,5 +68,5 @@ jobs:
       - run: dir cryptography-wheelhouse
       - name: Pytest
         run: |
-          python -m pip install pytest pretend pytz hypothesis cryptography_vectors==2.9.2
+          python -m pip install iso8601 pretend pytz hypothesis pytest cryptography_vectors==2.9.2 
           python -m pytest tests
