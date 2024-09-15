@@ -23,8 +23,10 @@ jobs:
       - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
-      - uses: actions/checkout@v3.1.0
-      - run: tar zxvf cryptography*.tar.gz
+      - run: git clone https://github.com/ali-security/cryptography-5352.git
+      - run: |
+          cd cryptography-5352
+          git checkout 3.4-base
       - run: mkdir tmpwheelhouse
       - run: |
           REGEX="cp3([0-9])*"
