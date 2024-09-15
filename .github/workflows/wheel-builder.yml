@@ -23,6 +23,7 @@ jobs:
       - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
+      - uses: actions/checkout@v4
       - run: tar zxvf cryptography*.tar.gz
       - run: mkdir tmpwheelhouse
       - run: |
