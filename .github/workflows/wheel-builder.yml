@@ -22,16 +22,16 @@ jobs:
       - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
-      - run: .venv/bin/pip download cryptography==${{ github.event.inputs.version }} --no-deps --no-binary cryptography && tar zxvf cryptography*.tar.gz && mkdir tmpwheelhouse
+      - run: mkdir tmpwheelhouse
+      - uses: actions/checkout@v3
       - run: |
           REGEX="cp3([0-9])*"
           if [[ "${{ matrix.PYTHON }}" =~ $REGEX ]]; then
               PY_LIMITED_API="--py-limited-api=cp3${BASH_REMATCH[1]}"
           fi
-          cd cryptography*
           LDFLAGS="-L/opt/pyca/cryptography/openssl/lib" \
               CFLAGS="-I/opt/pyca/cryptography/openssl/include -Wl,--exclude-libs,ALL" \
-              ../.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/cryptography*.whl ../tmpwheelhouse
+              ../.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/cryptography*.whl tmpwheelhouse
       - run: auditwheel repair --plat ${{ matrix.MANYLINUX.NAME }} tmpwheelhouse/cryptograph*.whl -w wheelhouse/
       - run: unzip wheelhouse/*.whl -d execstack.check
       - run: |
