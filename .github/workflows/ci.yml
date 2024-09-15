@@ -101,8 +101,8 @@ jobs:
     strategy:
       matrix:
         IMAGE:
-          - {IMAGE: "centos9", TOXENV: "py36"}
-          - {IMAGE: "centos9-fips", TOXENV: "py36", FIPS: true}
+          - {IMAGE: "centos-stream9", TOXENV: "py36"}
+          - {IMAGE: "centos-stream9-fips", TOXENV: "py36", FIPS: true}
           - {IMAGE: "buster", TOXENV: "py37"}
           - {IMAGE: "bullseye", TOXENV: "py39"}
           - {IMAGE: "sid", TOXENV: "py39"}
