@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - '*.*.x'
+      - '3.4-base'
     tags:
       - '*.*'
       - '*.*.*'
