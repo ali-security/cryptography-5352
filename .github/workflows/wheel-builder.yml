@@ -14,7 +14,7 @@ jobs:
         PYTHON: ["cp36-cp36m"]
         MANYLINUX:
           - NAME: manylinux2010_x86_64
-            CONTAINER: "quay.io/pypa/manylinux2010_x86_64:2020-01-31-046f791"
+            CONTAINER: "quay.io/pypa/manylinux2010_x86_64"
           - NAME: manylinux2014_x86_64
             CONTAINER: "ghcr.io/pyca/cryptography-manylinux2014:x86_64"
     name: "${{ matrix.PYTHON }} for ${{ matrix.MANYLINUX.NAME }}"
