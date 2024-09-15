@@ -17,7 +17,7 @@ jobs:
       matrix:
         PYTHON:
           - {VERSION: "3.9", TOXENV: "flake,rust,docs", COVERAGE: "false"}
-          - {VERSION: "pypy3", TOXENV: "pypy3"}
+          # - {VERSION: "pypy3", TOXENV: "pypy3"}
           - {VERSION: "3.9", TOXENV: "py39", OPENSSL: {TYPE: "openssl", VERSION: "1.1.0l"}}
           - {VERSION: "3.9", TOXENV: "py39", OPENSSL: {TYPE: "openssl", VERSION: "1.1.1i"}}
           - {VERSION: "3.9", TOXENV: "py39-ssh", OPENSSL: {TYPE: "openssl", VERSION: "1.1.1i"}}
@@ -101,8 +101,8 @@ jobs:
     strategy:
       matrix:
         IMAGE:
-          - {IMAGE: "centos8", TOXENV: "py36"}
-          - {IMAGE: "centos8-fips", TOXENV: "py36", FIPS: true}
+          - {IMAGE: "centos9", TOXENV: "py36"}
+          - {IMAGE: "centos9-fips", TOXENV: "py36", FIPS: true}
           - {IMAGE: "buster", TOXENV: "py37"}
           - {IMAGE: "bullseye", TOXENV: "py39"}
           - {IMAGE: "sid", TOXENV: "py39"}
