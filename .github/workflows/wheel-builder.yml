@@ -24,9 +24,15 @@ jobs:
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
       - run: git clone https://github.com/ali-security/cryptography-5352.git
-      - run: |
+      - name: Checkout the base branch
+        run: |
           cd cryptography-5352
           git checkout 3.4-base
+      - name: Install Rust
+        run: |
+          wget https://static.rust-lang.org/rustup/archive/1.23.1/x86_64-unknown-linux-gnu/rustup-init
+          chmod +x rustup-init
+          ./rustup-init -y --default-toolchain nightly-2021-01-25
       - run: mkdir tmpwheelhouse
       - run: |
           REGEX="cp3([0-9])*"
@@ -34,6 +40,7 @@ jobs:
               PY_LIMITED_API="--py-limited-api=cp3${BASH_REMATCH[1]}"
           fi
           cd cryptography*
+          source $HOME/.cargo/env
           LDFLAGS="-L/opt/pyca/cryptography/openssl/lib" \
               CFLAGS="-I/opt/pyca/cryptography/openssl/include -Wl,--exclude-libs,ALL" \
               ../.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/cryptography*.whl tmpwheelhouse
