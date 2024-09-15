@@ -19,6 +19,7 @@ jobs:
             CONTAINER: "ghcr.io/pyca/cryptography-manylinux2014:x86_64"
     name: "${{ matrix.PYTHON }} for ${{ matrix.MANYLINUX.NAME }}"
     steps:
+      - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m pip install virtualenv
       - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
