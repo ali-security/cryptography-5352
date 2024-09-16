@@ -144,7 +144,7 @@ jobs:
       - run: pip install requests
       - name: Download OpenSSL
         run: |
-            python .github/workflows/download_openssl.py windows openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}
+            python .github/workflows/download_openssl.py ${{ matrix.WINDOWS.ARCH }} openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}
             echo "INCLUDE=C:/openssl_${{ matrix.WINDOWS.ARCH }}/include;$INCLUDE" >> $GITHUB_ENV
             echo "LIB=C:/openssl_${{ matrix.WINDOWS.ARCH }}/lib;$LIB" >> $GITHUB_ENV
         env:
