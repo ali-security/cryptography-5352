@@ -6,64 +6,64 @@ on:
         required: true
 
 jobs:
-  manylinux:
-    runs-on: ubuntu-latest
-    container: ${{ matrix.MANYLINUX.CONTAINER }}
-    strategy:
-      matrix:
-        PYTHON: ["cp36-cp36m"]
-        MANYLINUX:
-          - NAME: manylinux2010_x86_64
-            CONTAINER: "quay.io/pypa/manylinux2010_x86_64:2021-02-06-3d322a5"
-          - NAME: manylinux2014_x86_64
-            CONTAINER: "ghcr.io/pyca/cryptography-manylinux2014:x86_64"
-    name: "${{ matrix.PYTHON }} for ${{ matrix.MANYLINUX.NAME }}"
-    steps:
-      - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m pip install virtualenv
-      - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
-      - name: Install Python dependencies
-        run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
-      - run: git clone https://github.com/ali-security/cryptography-5352.git
-      - name: Checkout the base branch
-        run: |
-          cd cryptography-5352
-          git checkout 3.4-base
-      - name: Install Rust
-        run: |
-          yum install -y wget
-          wget https://static.rust-lang.org/rustup/archive/1.23.1/x86_64-unknown-linux-gnu/rustup-init
-          chmod +x rustup-init
-          ./rustup-init -y --default-toolchain nightly-2021-01-25
-      - run: mkdir tmpwheelhouse
-      - run: |
-          REGEX="cp3([0-9])*"
-          if [[ "${{ matrix.PYTHON }}" =~ $REGEX ]]; then
-              PY_LIMITED_API="--py-limited-api=cp3${BASH_REMATCH[1]}"
-          fi
-          cd cryptography*
-          source $HOME/.cargo/env
-          LDFLAGS="-L/opt/pyca/cryptography/openssl/lib" \
-              CFLAGS="-I/opt/pyca/cryptography/openssl/include -Wl,--exclude-libs,ALL" \
-              ../.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/cryptography*.whl tmpwheelhouse
-      - run: auditwheel repair --plat ${{ matrix.MANYLINUX.NAME }} tmpwheelhouse/cryptograph*.whl -w wheelhouse/
-      - run: unzip wheelhouse/*.whl -d execstack.check
-      - run: |
-          results=$(execstack execstack.check/cryptography/hazmat/bindings/*.so)
-          count=$(echo "$results" | grep -c '^X' || true)
-          if [ "$count" -ne 0 ]; then
-            exit 1
-          else
-            exit 0
-          fi
-      - run: .venv/bin/pip install cryptography --no-index -f wheelhouse/
-      - run: |
-          .venv/bin/python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
-      - run: mkdir cryptography-wheelhouse
-      - run: mv wheelhouse/cryptography*.whl cryptography-wheelhouse/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: "cryptography-${{ github.event.inputs.version }}-${{ matrix.MANYLINUX.NAME }}-${{ matrix.PYTHON }}"
-          path: cryptography-wheelhouse/
+  # manylinux:
+  #   runs-on: ubuntu-latest
+  #   container: ${{ matrix.MANYLINUX.CONTAINER }}
+  #   strategy:
+  #     matrix:
+  #       PYTHON: ["cp36-cp36m"]
+  #       MANYLINUX:
+  #         - NAME: manylinux2010_x86_64
+  #           CONTAINER: "quay.io/pypa/manylinux2010_x86_64:2021-02-06-3d322a5"
+  #         - NAME: manylinux2014_x86_64
+  #           CONTAINER: "ghcr.io/pyca/cryptography-manylinux2014:x86_64"
+  #   name: "${{ matrix.PYTHON }} for ${{ matrix.MANYLINUX.NAME }}"
+  #   steps:
+  #     - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m pip install virtualenv
+  #     - run: /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv
+  #     - name: Install Python dependencies
+  #       run: .venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
+  #     - run: git clone https://github.com/ali-security/cryptography-5352.git
+  #     - name: Checkout the base branch
+  #       run: |
+  #         cd cryptography-5352
+  #         git checkout 3.4-base
+  #     - name: Install Rust
+  #       run: |
+  #         yum install -y wget
+  #         wget https://static.rust-lang.org/rustup/archive/1.23.1/x86_64-unknown-linux-gnu/rustup-init
+  #         chmod +x rustup-init
+  #         ./rustup-init -y --default-toolchain nightly-2021-01-25
+  #     - run: mkdir tmpwheelhouse
+  #     - run: |
+  #         REGEX="cp3([0-9])*"
+  #         if [[ "${{ matrix.PYTHON }}" =~ $REGEX ]]; then
+  #             PY_LIMITED_API="--py-limited-api=cp3${BASH_REMATCH[1]}"
+  #         fi
+  #         cd cryptography*
+  #         source $HOME/.cargo/env
+  #         LDFLAGS="-L/opt/pyca/cryptography/openssl/lib" \
+  #             CFLAGS="-I/opt/pyca/cryptography/openssl/include -Wl,--exclude-libs,ALL" \
+  #             ../.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/cryptography*.whl tmpwheelhouse
+  #     - run: auditwheel repair --plat ${{ matrix.MANYLINUX.NAME }} tmpwheelhouse/cryptograph*.whl -w wheelhouse/
+  #     - run: unzip wheelhouse/*.whl -d execstack.check
+  #     - run: |
+  #         results=$(execstack execstack.check/cryptography/hazmat/bindings/*.so)
+  #         count=$(echo "$results" | grep -c '^X' || true)
+  #         if [ "$count" -ne 0 ]; then
+  #           exit 1
+  #         else
+  #           exit 0
+  #         fi
+  #     - run: .venv/bin/pip install cryptography --no-index -f wheelhouse/
+  #     - run: |
+  #         .venv/bin/python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
+  #     - run: mkdir cryptography-wheelhouse
+  #     - run: mv wheelhouse/cryptography*.whl cryptography-wheelhouse/
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: "cryptography-${{ github.event.inputs.version }}-${{ matrix.MANYLINUX.NAME }}-${{ matrix.PYTHON }}"
+  #         path: cryptography-wheelhouse/
 
   macos:
     runs-on: macos-latest
@@ -76,7 +76,7 @@ jobs:
             BIN_PATH: '/Library/Frameworks/Python.framework/Versions/3.8/bin/python3'
     name: "${{ matrix.PYTHON.VERSION }} ABI ${{ matrix.PYTHON.ABI_VERSION }} macOS"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
       - run: |
           curl "$PYTHON_DOWNLOAD_URL" -o python.pkg
           sudo installer -pkg python.pkg -target /
@@ -145,8 +145,8 @@ jobs:
       - name: Download OpenSSL
         run: |
             python .github/workflows/download_openssl.py windows openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}
-            echo "INCLUDE=C:/openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}/include;$INCLUDE" >> $GITHUB_ENV
-            echo "LIB=C:/openssl-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.MSVC_VERSION }}/lib;$LIB" >> $GITHUB_ENV
+            echo "INCLUDE=C:/openssl_${{ matrix.WINDOWS.ARCH }}/include;$INCLUDE" >> $GITHUB_ENV
+            echo "LIB=C:/openssl_${{ matrix.WINDOWS.ARCH }}/lib;$LIB" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -162,7 +162,7 @@ jobs:
 
       - run: mkdir cryptography-wheelhouse
       - run: move wheelhouse\cryptography*.whl cryptography-wheelhouse\
-      - uses: actions/upload-artifact@v2.2.0
+      - uses: actions/upload-artifact@v4
         with:
           name: "cryptography-${{ github.event.inputs.version }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}-${{ matrix.PYTHON.ABI_VERSION}}"
           path: cryptography-wheelhouse\

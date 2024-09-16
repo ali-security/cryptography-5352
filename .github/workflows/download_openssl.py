@@ -71,4 +71,5 @@ def main(platform, target):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    platform, target = sys.argv
+    zipfile.ZipFile(f"./openssl_builds/openssl_{platform}.zip").extractall(f"C:/openssl_{platform}")
