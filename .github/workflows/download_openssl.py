@@ -75,4 +75,4 @@ if __name__ == "__main__":
     zipfile.ZipFile(rf".github\workflows\openssl_builds\openssl_{arch}.zip").extractall(f"C:\\")
     print(os.listdir(f"C:\\"))
     print(os.listdir(f"C:\\_install"))
-    shutil.move(f"C:\\_install\\Program Files\\OpenSSL", f"C:\\OpenSSL_{arch}")
+    shutil.move(f"C:\\OpenSSL", f"C:\\OpenSSL_{arch}")
