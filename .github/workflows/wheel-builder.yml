@@ -152,9 +152,9 @@ jobs:
         shell: bash
 
       - run: python -m pip install -U pip wheel cffi six ipaddress setuptools-rust
-      - run: python setup.py bdist_wheel --py-limited-api=${{ matrix.PYTHON.ABI_VERSION }} && mv dist/cryptography*.whl ../wheelhouse
-      - run: DIR ../wheelhouse
-      - run: pip install -f ../wheelhouse --no-index cryptography
+      - run: python setup.py bdist_wheel --py-limited-api=${{ matrix.PYTHON.ABI_VERSION }} && mkdir wheelhouse && mv dist/cryptography*.whl wheelhouse
+      - run: DIR wheelhouse/
+      - run: pip install -f wheelhouse --no-index cryptography
       - name: Print the OpenSSL we built and linked against
         run: |
             python -c "from cryptography.hazmat.backends.openssl.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
