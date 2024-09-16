@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import zipfile
-
+import shutil
 import requests
 
 from urllib3.util.retry import Retry
@@ -72,4 +72,5 @@ def main(platform, target):
 
 if __name__ == "__main__":
     arch, target = sys.argv[1], sys.argv[2]
-    zipfile.ZipFile(f"./openssl_builds/openssl_{arch}.zip").extractall(f"C:/openssl_{arch}")
+    zipfile.ZipFile(f".github\\workflows\\openssl_{arch}.zip").extractall(f"C:\\")
+    shutil.move(f"C:\\_install\\Program Files\\OpenSSL", f"C:\\OpenSSL_{arch}")
