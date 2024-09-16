@@ -72,5 +72,5 @@ def main(platform, target):
 
 if __name__ == "__main__":
     arch, target = sys.argv[1], sys.argv[2]
-    zipfile.ZipFile(rf".github\workflowsֿֿֿֿ\openssl_builds\openssl_{arch}.zip").extractall(f"C:\\")
+    zipfile.ZipFile(rf".github\workflows\openssl_builds\openssl_{arch}.zip").extractall(f"C:\\")
     shutil.move(f"C:\\_install\\Program Files\\OpenSSL", f"C:\\OpenSSL_{arch}")
