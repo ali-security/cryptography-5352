@@ -9,10 +9,12 @@ import requests
 from urllib3.util.retry import Retry
 
 
-def get_response(session, url):
+def get_response(session, url, token):
     # Retry on non-502s
     for i in range(5):
-        response = session.get(url)
+        response = session.get(
+            url, headers={"Authorization": "token " + token}
+        )
         if response.status_code != 200:
             print(
                 "HTTP error ({}) fetching {}, retrying".format(
@@ -22,7 +24,7 @@ def get_response(session, url):
             time.sleep(2)
             continue
         return response
-    response = session.get(url)
+    response = session.get(url, headers={"Authorization": "token " + token})
     if response.status_code != 200:
         raise ValueError(
             "Got HTTP {} fetching {}: ".format(response.status_code, url)
@@ -47,19 +49,20 @@ def main(platform, target):
     session.mount("https://", adapter)
     session.mount("http://", adapter)
 
+    token = os.environ["GITHUB_TOKEN"]
     print("Looking for: {}".format(target))
     runs_url = (
         "https://api.github.com/repos/ali-security/cryptography-5352/actions/workflows/"
         "{}/runs?branch=3.4-base".format(workflow)
     )
 
-    response = get_response(session, runs_url).json()
+    response = get_response(session, runs_url, token).json()
     artifacts_url = response["workflow_runs"][0]["artifacts_url"]
-    response = get_response(session, artifacts_url).json()
+    response = get_response(session, artifacts_url, token).json()
     for artifact in response["artifacts"]:
         if artifact["name"] == target:
             print("Found artifact")
-            response = get_response(session, artifact["archive_download_url"])
+            response = get_response(session, artifact["archive_download_url"], token)
             zipfile.ZipFile(io.BytesIO(response.content)).extractall(
                 os.path.join(path, artifact["name"])
             )
