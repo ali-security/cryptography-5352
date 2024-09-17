@@ -108,7 +108,7 @@ jobs:
 
       - run: mkdir cryptography-wheelhouse
       - run: mv wheelhouse/cryptography*.whl cryptography-wheelhouse/
-      - uses: actions/upload-artifact@v2.2.0
+      - uses: actions/upload-artifact@v4
         with:
           name: "cryptography-${{ github.event.inputs.version }}-macOS-${{ matrix.PYTHON.ABI_VERSION }}"
           path: cryptography-wheelhouse/
