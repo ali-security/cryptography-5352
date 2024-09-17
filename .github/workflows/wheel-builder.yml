@@ -96,10 +96,8 @@ jobs:
 
       - run: ${{ matrix.PYTHON.BIN_PATH }} -m virtualenv venv
       - run: venv/bin/pip install -U pip wheel cffi six ipaddress setuptools-rust
-      - run: venv/bin/pip download cryptography==${{ github.event.inputs.version }} --no-deps --no-binary cryptography && tar zxvf cryptography*.tar.gz && mkdir wheelhouse
       - name: Build the wheel
         run: |
-          cd cryptography*
           CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS="1" \
               LDFLAGS="${HOME}/openssl-macos-x86-64/lib/libcrypto.a ${HOME}/openssl-macos-x86-64/lib/libssl.a" \
               CFLAGS="-I${HOME}/openssl-macos-x86-64/include -mmacosx-version-min=10.10 -march=core2" \
