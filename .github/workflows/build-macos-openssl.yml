@@ -28,7 +28,6 @@ jobs:
       - name: Extract OpenSSL
         run: |
           tar zxf openssl.tar.gz
-      - uses: actions/checkout@v4.1.7
       - run: ls -lA
       - name: Apply Patches
         run: |
