@@ -32,7 +32,7 @@ jobs:
       - name: Apply Patches
         run: |
             cd openssl*
-            git apply --whitespace=fix .github/workflows/macos_openssl_patches/*.patch
+            git apply --whitespace=fix ../.github/workflows/macos_openssl_patches/*.patch
       - name: Build OpenSSL
         run: |
           set -x
