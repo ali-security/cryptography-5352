@@ -5,7 +5,7 @@ on:
       openssl_version:
         description: "openssl version"
         required: false
-        default: "1.1.1i"
+        default: "OpenSSL_1_1_1i"
 jobs:
   build:
     runs-on: macos-13
