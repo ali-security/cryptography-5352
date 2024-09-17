@@ -24,9 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
       - name: Download OpenSSL
-        run: |
-          source ./cryptography-linux/openssl-version.sh
-          curl -Lo openssl.tar.gz https://github.com/openssl/openssl/releases/download/${{ inputs.openssl_version }}/${{ inputs.openssl_version }}.tar.gz
+        run: curl -Lo openssl.tar.gz https://github.com/openssl/openssl/releases/download/${{ inputs.openssl_version }}/${{ inputs.openssl_version }}.tar.gz
       - name: Extract OpenSSL
         run: |
           tar zxf openssl.tar.gz
@@ -38,7 +36,6 @@ jobs:
       - name: Build OpenSSL
         run: |
           set -x
-          source ./cryptography-linux/openssl-version.sh
           mkdir artifact
           BASEDIR=$(pwd)
           cd openssl*
