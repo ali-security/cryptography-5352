@@ -1,0 +1,88 @@
+name: macOS OpenSSL
+on:
+  workflow_dispatch:
+    inputs:
+      openssl_version:
+        description: "openssl version"
+        required: false
+        default: "1.1.1i"
+jobs:
+  build:
+    runs-on: macos-13
+    strategy:
+      matrix:
+        ARCH:
+          - NAME: x86_64
+            ARTIFACT_NAME: x86-64
+            CFLAGS: "-mmacosx-version-min=10.12 -march=core2"
+            OPENSSLDIR: "/usr/local/etc/openssl@3"
+          - NAME: arm64
+            ARTIFACT_NAME: arm64
+            CFLAGS: "-mmacosx-version-min=11.0"
+            OPENSSLDIR: "/opt/homebrew/etc/openssl@3"
+    name: "Build OpenSSL for macOS (${{ matrix.ARCH.NAME }})"
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - name: Download OpenSSL
+        run: |
+          source ./cryptography-linux/openssl-version.sh
+          curl -Lo openssl.tar.gz https://github.com/openssl/openssl/releases/download/${{ inputs.openssl_version }}/${{ inputs.openssl_version }}.tar.gz
+      - name: Extract OpenSSL
+        run: |
+          tar zxf openssl.tar.gz
+      - uses: actions/checkout@v4.1.7
+      - name: Apply Patches
+        run: |
+            cd openssl*
+            git apply --whitespace=fix .github/workflows/macos_openssl_patches/*.patch
+      - name: Build OpenSSL
+        run: |
+          set -x
+          source ./cryptography-linux/openssl-version.sh
+          mkdir artifact
+          BASEDIR=$(pwd)
+          cd openssl*
+          # Use the brew openssldir so pyopenssl users with homebrew installed
+          # will have roots for TLS. This is obviously not great but we live in
+          # an imperfect world.
+          perl ./Configure \
+              --prefix="${BASEDIR}/artifact" \
+              --openssldir=${{ matrix.ARCH.OPENSSLDIR }} \
+              darwin64-${{ matrix.ARCH.NAME }}-cc \
+              $OPENSSL_BUILD_FLAGS
+          make -j$(sysctl -n hw.logicalcpu)
+          make install_sw
+        env:
+          CFLAGS: ${{ matrix.ARCH.CFLAGS }}
+
+      - uses: actions/upload-artifact@v4.4.0
+        with:
+          name: "openssl-macos-${{ matrix.ARCH.ARTIFACT_NAME }}"
+          path: artifact/
+
+  universal2:
+    runs-on: macos-13
+    name: "Build OpenSSL for macOS universal2"
+    needs: [ build ]
+    steps:
+      - uses: actions/download-artifact@v4.1.8
+        with:
+          name: openssl-macos-x86-64
+          path: x86-64
+      - uses: actions/download-artifact@v4.1.8
+        with:
+          name: openssl-macos-arm64
+          path: arm64
+      - name: Create universal2 OpenSSL
+        run: |
+          mkdir artifact
+          cd artifact
+          mkdir bin lib
+          cp -r ../x86-64/include .
+          cp -r ../x86-64/lib/pkgconfig lib/
+          lipo -create -output lib/libssl.a ../x86-64/lib/libssl.a ../arm64/lib/libssl.a
+          lipo -create -output lib/libcrypto.a ../x86-64/lib/libcrypto.a ../arm64/lib/libcrypto.a
+      - uses: actions/upload-artifact@v4.4.0
+        with:
+          name: "openssl-macos-universal2"
+          path: artifact/
