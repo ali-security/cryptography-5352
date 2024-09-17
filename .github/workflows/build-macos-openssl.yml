@@ -66,10 +66,10 @@ jobs:
         with:
           name: openssl-macos-x86-64
           path: x86-64
-      - uses: actions/download-artifact@v4.1.8
-        with:
-          name: openssl-macos-arm64
-          path: arm64
+    #   - uses: actions/download-artifact@v4.1.8
+    #     with:
+    #       name: openssl-macos-arm64
+    #       path: arm64
       - name: Create universal2 OpenSSL
         run: |
           mkdir artifact
