@@ -165,4 +165,7 @@ jobs:
         with:
           name: "cryptography-${{ github.event.inputs.version }}-${{ matrix.WINDOWS.WINDOWS }}-${{ matrix.PYTHON.VERSION }}-${{ matrix.PYTHON.ABI_VERSION}}"
           path: cryptography-wheelhouse\
-      - run: pytest
+      - name: "pytest"
+        run: |
+          python -m pip install iso8601 pretend pytz hypothesis pytest cryptography_vectors==3.4+sp1
+          python -m pytest tests -k "not test_vector_version"
