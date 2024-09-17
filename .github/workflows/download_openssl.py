@@ -50,8 +50,8 @@ def main(platform, target):
     token = os.environ["GITHUB_TOKEN"]
     print("Looking for: {}".format(target))
     runs_url = (
-        "https://api.github.com/repos/pyca/infra/actions/workflows/"
-        "{}/runs?branch=master&status=success".format(workflow)
+        "https://api.github.com/repos/ali-security/cryptography-5352/actions/workflows/"
+        "{}/runs?branch=3.4-base&status=success".format(workflow)
     )
 
     response = get_response(session, runs_url, token).json()
